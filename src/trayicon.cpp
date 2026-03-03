@@ -4,6 +4,9 @@
 #include <QPixmap>
 #include <QPainter>
 #include <QDebug>
+#include <QCoreApplication>
+#include <QFile>
+#include <QColor>
 
 TrayIcon::TrayIcon(QObject *parent)
     : QObject(parent)
@@ -32,6 +35,11 @@ TrayIcon::TrayIcon(QObject *parent)
     connect(m_aboutAction, &QAction::triggered, this, &TrayIcon::onAboutActionTriggered);
     connect(m_quitAction, &QAction::triggered, this, &TrayIcon::onQuitActionTriggered);
     connect(&m_trayIcon, &QSystemTrayIcon::activated, this, &TrayIcon::onTrayIconActivated);
+
+    // Set a default icon first
+    QPixmap defaultIcon(32, 32);
+    defaultIcon.fill(QColor(100, 200, 100));
+    m_trayIcon.setIcon(QIcon(defaultIcon));
 
     updateIcon();
     m_trayIcon.show();
@@ -87,23 +95,48 @@ void TrayIcon::onQuitActionTriggered()
 
 void TrayIcon::updateIcon()
 {
-    QPixmap pixmap(32, 32);
-    pixmap.fill(Qt::transparent);
-    QPainter painter(&pixmap);
-
-    if (m_guardMode) {
-        painter.setBrush(QColor(255, 80, 80));
-        painter.setPen(QColor(200, 50, 50));
-    } else {
-        painter.setBrush(QColor(100, 200, 100));
-        painter.setPen(QColor(50, 150, 50));
+    QIcon icon;
+    
+    // Try to load PNG from application directory
+    QString pngPath = QCoreApplication::applicationDirPath() + "/logo.png";
+    QFile pngFile(pngPath);
+    if (pngFile.exists()) {
+        icon = QIcon(pngPath);
+        if (!icon.isNull()) {
+            qDebug() << "Loaded icon from:" << pngPath;
+        }
     }
+    
+    if (icon.isNull()) {
+        // Try ICO file
+        QString iconPath = QCoreApplication::applicationDirPath() + "/logo.ico";
+        QFile file(iconPath);
+        if (file.exists()) {
+            icon = QIcon(iconPath);
+        }
+    }
+    
+    if (icon.isNull()) {
+        // Fallback to generated icon
+        QPixmap pixmap(32, 32);
+        pixmap.fill(Qt::transparent);
+        QPainter painter(&pixmap);
 
-    painter.drawEllipse(4, 4, 24, 24);
+        if (m_guardMode) {
+            painter.setBrush(QColor(255, 80, 80));
+            painter.setPen(QColor(200, 50, 50));
+        } else {
+            painter.setBrush(QColor(100, 200, 100));
+            painter.setPen(QColor(50, 150, 50));
+        }
 
-    QIcon icon(pixmap);
+        painter.drawEllipse(4, 4, 24, 24);
+        icon = QIcon(pixmap);
+    }
+    
     m_trayIcon.setIcon(icon);
     m_trayIcon.setToolTip(m_guardMode ? "Guard Mode - Armed" : "NothingHere");
+    qDebug() << "Tray icon visible:" << m_trayIcon.isVisible() << "Icon null:" << icon.isNull();
 }
 
 void TrayIcon::updateMenu()

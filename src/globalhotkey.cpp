@@ -18,9 +18,9 @@ GlobalHotkey::~GlobalHotkey()
     unregisterHotkey();
 }
 
-bool GlobalHotkey::registerHotkey(const QString &hotkey)
+bool GlobalHotkey::registerHotkey(const QString &hotkey, HWND hwnd)
 {
-    unregisterHotkey();
+    unregisterHotkey(hwnd);
 
     QKeySequence seq(hotkey);
     if (seq.isEmpty()) {
@@ -79,15 +79,20 @@ bool GlobalHotkey::registerHotkey(const QString &hotkey)
     if (m_modifiers & Qt::ShiftModifier) winMod |= MOD_SHIFT;
     if (m_modifiers & Qt::MetaModifier) winMod |= MOD_WIN;
 
-    m_registered = RegisterHotKey(nullptr, 1, winMod, m_key);
-    qDebug() << "Hotkey registered:" << hotkey << "Key:" << m_key << "Modifiers:" << m_modifiers << "Success:" << m_registered;
+    if (!hwnd) {
+        qDebug() << "Warning: No HWND provided for hotkey registration";
+        return false;
+    }
+    
+    m_registered = RegisterHotKey(hwnd, 1, winMod, m_key);
+    qDebug() << "Hotkey registered:" << hotkey << "Key:" << m_key << "Modifiers:" << m_modifiers << "HWND:" << hwnd << "Success:" << m_registered;
     return m_registered;
 }
 
-void GlobalHotkey::unregisterHotkey()
+void GlobalHotkey::unregisterHotkey(HWND hwnd)
 {
-    if (m_registered) {
-        UnregisterHotKey(nullptr, 1);
+    if (m_registered && hwnd) {
+        UnregisterHotKey(hwnd, 1);
     }
     m_registered = false;
     m_key = 0;

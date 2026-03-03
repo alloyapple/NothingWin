@@ -26,6 +26,7 @@ endif()
 
 add_executable(${PROJECT_NAME} WIN32
     main.cpp
+    resources.qrc
     src/mainwindow.cpp
     src/mainwindow.h
     src/panicbutton.cpp
@@ -45,6 +46,9 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Widgets Qt5::Core Qt5::Gui)
 if(WIN32)
     target_link_libraries(${PROJECT_NAME} PRIVATE user32.lib)
     set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-mwindows")
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        ICON "logo.ico"
+    )
 endif()
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE

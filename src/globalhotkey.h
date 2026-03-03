@@ -13,8 +13,8 @@ public:
     explicit GlobalHotkey(QObject *parent = nullptr);
     ~GlobalHotkey();
 
-    bool registerHotkey(const QString &hotkey);
-    void unregisterHotkey();
+    bool registerHotkey(const QString &hotkey, HWND hwnd = nullptr);
+    void unregisterHotkey(HWND hwnd = nullptr);
     bool isRegistered() const;
 
     virtual bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;

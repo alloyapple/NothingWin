@@ -178,7 +178,7 @@ void MainWindow::loadSettings()
     if (m_coverDocEdit) {
         m_coverDocEdit->setText(s.coverDocument());
     }
-    m_hotkey->registerHotkey(s.hotkey());
+    m_hotkey->registerHotkey(s.hotkey(), reinterpret_cast<HWND>(winId()));
 
     m_guardMode = s.guardModeEnabled();
     m_trayIcon->setGuardMode(m_guardMode);
