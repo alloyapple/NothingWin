@@ -42,7 +42,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::init()
 {
-    qDebug() << "Initializing NothingHere...";
+    qDebug() << "Initializing NothingWin...";
 
     m_trayIcon = new TrayIcon(this);
     m_hotkey = new GlobalHotkey(this);
@@ -65,7 +65,7 @@ void MainWindow::init()
 
     loadSettings();
 
-    qDebug() << "NothingHere initialized";
+    qDebug() << "NothingWin initialized";
 }
 
 void MainWindow::onHotkeyPressed()
@@ -99,8 +99,8 @@ void MainWindow::onShowSettings()
 
 void MainWindow::onShowAbout()
 {
-    QMessageBox::about(this, tr("About NothingHere"),
-        tr("NothingHere v1.0\n\n") +
+    QMessageBox::about(this, tr("About NothingWin"),
+        tr("NothingWin v1.0\n\n") +
         tr("A panic button for Windows.\n\n") +
         tr("Press the hotkey to hide all windows, mute system, and open a cover document."));
 }
@@ -314,9 +314,9 @@ void MainWindow::setGuardMode(bool enabled)
 
     if (enabled) {
         m_keyboardHook->install();
-        m_trayIcon->showMessage("NothingHere", "Guard Mode enabled - Press any key to trigger panic!");
+        m_trayIcon->showMessage("NothingWin", "Guard Mode enabled - Press any key to trigger panic!");
     } else {
         m_keyboardHook->uninstall();
-        m_trayIcon->showMessage("NothingHere", "Guard Mode disabled");
+        m_trayIcon->showMessage("NothingWin", "Guard Mode disabled");
     }
 }

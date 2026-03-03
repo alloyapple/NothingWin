@@ -2,7 +2,7 @@
 
 Settings::Settings(QObject *parent)
     : QObject(parent)
-    , m_settings("NothingHere", "Settings")
+    , m_settings("NothingWin", "Settings")
 {
 }
 

@@ -64,8 +64,12 @@
         <translation>所有文件 (*)</translation>
     </message>
     <message>
-        <source>About NothingHere</source>
-        <translation>关于 NothingHere</translation>
+        <source>About NothingWin</source>
+        <translation>关于 NothingWin</translation>
+    </message>
+    <message>
+        <source>NothingWin v1.0\n\n</source>
+        <translation>NothingWin v1.0\n\n</translation>
     </message>
     <message>
         <source>NothingHere v1.0\n\n</source>
@@ -115,8 +119,8 @@
         <translation>NothingWin</translation>
     </message>
     <message>
-        <source>NothingHere</source>
-        <translation>NothingHere</translation>
+        <source>NothingWin</source>
+        <translation>NothingWin</translation>
     </message>
     <message>
         <source>Guard Mode enabled - Press any key to trigger panic!</source>
