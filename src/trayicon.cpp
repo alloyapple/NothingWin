@@ -135,7 +135,7 @@ void TrayIcon::updateIcon()
     }
     
     m_trayIcon.setIcon(icon);
-    m_trayIcon.setToolTip(m_guardMode ? "Guard Mode - Armed" : "NothingHere");
+    m_trayIcon.setToolTip(m_guardMode ? "Guard Mode - Armed" : "NothingWin");
     qDebug() << "Tray icon visible:" << m_trayIcon.isVisible() << "Icon null:" << icon.isNull();
 }
 
