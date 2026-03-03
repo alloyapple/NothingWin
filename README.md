@@ -1,4 +1,4 @@
-# NothingHere Windows
+# NothingWin Windows
 
 Windows 上的「老板来了」一键清理屏幕神器。
 
@@ -34,15 +34,15 @@ Windows 上的「老板来了」一键清理屏幕神器。
 ## Installation
 
 ### 预编译版本
-1. 下载 `NothingHere.exe`
+1. 下载 `NothingWin.exe`
 2. 运行即可
 
 ### 从源码编译
 ```bash
 # 安装 Qt 5 (MinGW)
 # 克隆项目
-git clone https://github.com/yourrepo/NothingHere.git
-cd NothingHere
+git clone https://github.com/yourrepo/NothingWin.git
+cd NothingWin
 
 # 构建
 mkdir build && cd build
@@ -50,7 +50,7 @@ cmake -G "MinGW Makefiles" ..
 mingw32-make
 
 # 部署
-windeployqt NothingHere.exe
+windeployqt NothingWin.exe
 ```
 
 ## Permissions
@@ -71,7 +71,7 @@ windeployqt NothingHere.exe
 
 MIT License
 
-Copyright (c) 2026 NothingHere
+Copyright (c) 2026 NothingWin
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
