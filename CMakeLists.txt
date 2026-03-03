@@ -56,4 +56,8 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
     $<$<CONFIG:Release>:QT_NO_DEBUG_OUTPUT>
 )
 
+# Copy translations to build directory
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/translations DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+install(DIRECTORY translations DESTINATION bin)

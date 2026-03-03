@@ -9,6 +9,8 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QAbstractEventDispatcher>
+#include <QFrame>
+#include <QLabel>
 
 static MainWindow *s_instance = nullptr;
 
@@ -24,8 +26,8 @@ MainWindow::MainWindow(QWidget *parent)
     , m_guardMode(false)
 {
     s_instance = this;
-    setWindowTitle("NothingHere");
-    resize(400, 300);
+    setWindowTitle("NothingWin");
+    resize(650, 550);
 }
 
 MainWindow::~MainWindow()
@@ -132,37 +134,150 @@ void MainWindow::setupUi()
 {
     m_settingsWidget = new QWidget();
     setCentralWidget(m_settingsWidget);
+    setWindowTitle(tr("Settings - NothingWin"));
+    resize(500, 400);
 
+    // Main vertical layout
     QVBoxLayout *mainLayout = new QVBoxLayout(m_settingsWidget);
+    mainLayout->setSpacing(20);
+    mainLayout->setContentsMargins(30, 30, 30, 30);
 
-    QLabel *hotkeyLabel = new QLabel(tr("Hotkey:"), this);
-    m_hotkeyEdit = new QLineEdit(this);
-    m_hotkeyEdit->setText("Ctrl+Alt+H");
+    // Header
+    QLabel *titleLabel = new QLabel(tr("Settings"));
+    titleLabel->setStyleSheet("font-size: 28px; font-weight: bold; color: #333; margin-bottom: 10px;");
+    mainLayout->addWidget(titleLabel);
 
-    QHBoxLayout *hotkeyLayout = new QHBoxLayout();
+    QLabel *subtitleLabel = new QLabel(tr("Configure your panic button preferences"));
+    subtitleLabel->setStyleSheet("font-size: 15px; color: #666; margin-bottom: 20px;");
+    mainLayout->addWidget(subtitleLabel);
+
+    // Hotkey section
+    QFrame *hotkeyFrame = new QFrame();
+    hotkeyFrame->setStyleSheet("QFrame { background: #f8f9fa; border-radius: 10px; padding: 20px; }");
+    QVBoxLayout *hotkeyLayout = new QVBoxLayout(hotkeyFrame);
+    hotkeyLayout->setSpacing(10);
+
+    QLabel *hotkeyLabel = new QLabel(tr("Panic Hotkey"));
+    hotkeyLabel->setStyleSheet("font-size: 18px; font-weight: 600; color: #333;");
     hotkeyLayout->addWidget(hotkeyLabel);
+
+    QLabel *hotkeyDesc = new QLabel(tr("Press this key combination to instantly hide everything"));
+    hotkeyDesc->setStyleSheet("font-size: 14px; color: #888;");
+    hotkeyDesc->setWordWrap(true);
+    hotkeyLayout->addWidget(hotkeyDesc);
+
+    m_hotkeyEdit = new QLineEdit();
+    m_hotkeyEdit->setText("Ctrl+Alt+H");
+    m_hotkeyEdit->setStyleSheet(
+        "QLineEdit { "
+        "  background: white; border: 2px solid #e0e0e0; border-radius: 8px; "
+        "  padding: 14px 18px; font-size: 16px; color: #333; "
+        "} "
+        "QLineEdit:focus { border-color: #4CAF50; }"
+    );
     hotkeyLayout->addWidget(m_hotkeyEdit);
 
-    QLabel *coverLabel = new QLabel(tr("Cover Document:"), this);
-    m_coverDocEdit = new QLineEdit(this);
-    m_browseBtn = new QPushButton(tr("Browse..."), this);
+    mainLayout->addWidget(hotkeyFrame);
 
-    QHBoxLayout *coverLayout = new QHBoxLayout();
-    coverLayout->addWidget(m_coverDocEdit);
-    coverLayout->addWidget(m_browseBtn);
+    // Cover document section
+    QFrame *coverFrame = new QFrame();
+    coverFrame->setStyleSheet("QFrame { background: #f8f9fa; border-radius: 10px; padding: 20px; }");
+    QVBoxLayout *coverLayout = new QVBoxLayout(coverFrame);
+    coverLayout->setSpacing(10);
 
-    QPushButton *saveBtn = new QPushButton(tr("Save"), this);
-    QPushButton *cancelBtn = new QPushButton(tr("Cancel"), this);
+    QLabel *coverLabel = new QLabel(tr("Cover Document"));
+    coverLabel->setStyleSheet("font-size: 18px; font-weight: 600; color: #333;");
+    coverLayout->addWidget(coverLabel);
 
+    QLabel *coverDesc = new QLabel(tr("This document will open when panic is triggered"));
+    coverDesc->setStyleSheet("font-size: 14px; color: #888;");
+    coverDesc->setWordWrap(true);
+    coverLayout->addWidget(coverDesc);
+
+    QHBoxLayout *coverInputLayout = new QHBoxLayout();
+    coverInputLayout->setSpacing(10);
+
+    m_coverDocEdit = new QLineEdit();
+    m_coverDocEdit->setStyleSheet(
+        "QLineEdit { "
+        "  background: white; border: 2px solid #e0e0e0; border-radius: 8px; "
+        "  padding: 14px 18px; font-size: 16px; color: #333; "
+        "} "
+        "QLineEdit:focus { border-color: #4CAF50; }"
+    );
+    m_coverDocEdit->setPlaceholderText(tr("Select a file to use as cover..."));
+    coverInputLayout->addWidget(m_coverDocEdit);
+
+    m_browseBtn = new QPushButton(tr("Browse"));
+    m_browseBtn->setStyleSheet(
+        "QPushButton { "
+        "  background: #4CAF50; color: white; border: none; border-radius: 8px; "
+        "  padding: 14px 24px; font-size: 16px; font-weight: 600; "
+        "} "
+        "QPushButton:hover { background: #45a049; } "
+        "QPushButton:pressed { background: #3d8b40; }"
+    );
+    m_browseBtn->setCursor(Qt::PointingHandCursor);
+    coverInputLayout->addWidget(m_browseBtn);
+
+    coverLayout->addLayout(coverInputLayout);
+    mainLayout->addWidget(coverFrame);
+
+    // Button section
     QHBoxLayout *btnLayout = new QHBoxLayout();
-    btnLayout->addStretch();
-    btnLayout->addWidget(saveBtn);
+    btnLayout->setSpacing(12);
+
+    QPushButton *cancelBtn = new QPushButton(tr("Cancel"));
+    cancelBtn->setStyleSheet(
+        "QPushButton { "
+        "  background: #f5f5f5; color: #666; border: 2px solid #e0e0e0; border-radius: 8px; "
+        "  padding: 14px 28px; font-size: 16px; font-weight: 600; "
+        "} "
+        "QPushButton:hover { background: #e8e8e8; } "
+        "QPushButton:pressed { background: #ddd; }"
+    );
+    cancelBtn->setCursor(Qt::PointingHandCursor);
     btnLayout->addWidget(cancelBtn);
 
-    mainLayout->addLayout(hotkeyLayout);
-    mainLayout->addLayout(coverLayout);
-    mainLayout->addStretch();
+    btnLayout->addStretch();
+
+    QPushButton *saveBtn = new QPushButton(tr("Save Settings"));
+    saveBtn->setStyleSheet(
+        "QPushButton { "
+        "  background: #4CAF50; color: white; border: none; border-radius: 8px; "
+        "  padding: 14px 36px; font-size: 16px; font-weight: 600; "
+        "} "
+        "QPushButton:hover { background: #45a049; } "
+        "QPushButton:pressed { background: #3d8b40; }"
+    );
+    saveBtn->setCursor(Qt::PointingHandCursor);
+    btnLayout->addWidget(saveBtn);
+
     mainLayout->addLayout(btnLayout);
+
+    // Guard Mode info
+    QFrame *guardFrame = new QFrame();
+    guardFrame->setStyleSheet(
+        "QFrame { "
+        "  background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
+        "    stop:0 #e8f5e9, stop:1 #c8e6c9); "
+        "  border-radius: 10px; padding: 20px; "
+        "}"
+    );
+    QVBoxLayout *guardLayout = new QVBoxLayout(guardFrame);
+    guardLayout->setSpacing(6);
+
+    QLabel *guardTitle = new QLabel(tr("Guard Mode"));
+    guardTitle->setStyleSheet("font-size: 18px; font-weight: 600; color: #2e7d32;");
+    guardLayout->addWidget(guardTitle);
+
+    QLabel *guardDesc = new QLabel(tr("When enabled, pressing any key will trigger the panic action. "
+        "Right-click the tray icon and select 'Arm Guard Mode' to enable."));
+    guardDesc->setStyleSheet("font-size: 14px; color: #388e3c;");
+    guardDesc->setWordWrap(true);
+    guardLayout->addWidget(guardDesc);
+
+    mainLayout->addWidget(guardFrame);
 
     connect(m_browseBtn, &QPushButton::clicked, this, &MainWindow::onSelectCoverDocument);
     connect(saveBtn, &QPushButton::clicked, this, &MainWindow::onSaveSettings);
