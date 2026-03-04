@@ -4,13 +4,12 @@
 
 <h1 align="center">NothingWin</h1>
 
-<p align="center">
+
 [![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11-blue?logo=windows)](https://github.com/yourrepo/NothingWin)
 [![Version](https://img.shields.io/badge/version-1.0.0-green)](https://github.com/yourrepo/NothingWin/releases)
 [![License](https://img.shields.io/badge/license-MIT-orange)](LICENSE)
 [![Qt](https://img.shields.io/badge/Qt-5.15+-41CD52?logo=qt)](https://www.qt.io/)
-</p>
----
+
 **🖥️ Windows 上的「老板来了」一键清理屏幕神器**
 
 按一个全局热键，瞬间完成：隐藏所有窗口 · 静音系统 · 暂停媒体 · 打开伪装文档
