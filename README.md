@@ -1,7 +1,8 @@
-<p>
-  <img  text-align="center" src="logo.png"></img >
+<p align="center">
+  <img src="logo.png" alt="NothingWin Logo" width="280" />
 </p>
-<p text-align="center"># NothingWin </p>
+
+<h1>NothingWin</h1>
 
 [![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11-blue?logo=windows)](https://github.com/yourrepo/NothingWin)
 [![Version](https://img.shields.io/badge/version-1.0.0-green)](https://github.com/yourrepo/NothingWin/releases)
